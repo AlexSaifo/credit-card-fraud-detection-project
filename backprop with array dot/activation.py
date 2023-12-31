@@ -11,4 +11,10 @@ class Activation(Layer):
         return self.activation(self.input)
 
     def backward(self, output_gradient, learning_rate):
+        # print("output gradient.shape: ",output_gradient.shape)
+        # print("input.shape: ",self.input.shape)
         return np.multiply(output_gradient, self.activation_prime(self.input))
+    
+    def RProp(self, output_gradient, learning_rate):
+        # print("output gradient.shape Rpop: ",output_gradient.shape)
+        return self.backward(output_gradient,learning_rate)
