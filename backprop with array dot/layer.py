@@ -10,3 +10,8 @@ class Layer:
     def backward(self, output_gradient, learning_rate):
         # TODO: update parameters and return input gradient
         pass
+    
+    def RProp(self, output_gradient, learning_rate):
+        # TODO: update parameters and return input gradient
+        pass
+    

@@ -6,7 +6,7 @@ def predict(network, input):
         output = layer.forward(output)
     return output
 
-def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_rate = 0.01, w0=1, w1=1, verbose = True):
+def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_rate = 0.01, w0=1, w1=1, algorithm = "backward_propagation" ,verbose = True):
     for e in range(epochs):
         error = 0
         outputs = []
@@ -20,9 +20,19 @@ def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_r
 
         # backward
         grad = loss_prime(y, output,w0,w1)
-        for layer in reversed(network):
-            grad = layer.backward(grad, learning_rate)
-
+        # print("grad.shape: ",grad.shape)
+        # print("output.shape: ",output.shape)
+        # print("x.shape: ",x.shape)
+        # print("y.shape: ",y.shape)
+        if algorithm == "backward_propagation":
+            for layer in reversed(network):
+                grad = layer.backward(grad, learning_rate)
+        elif algorithm == "RProp":
+            iter = 1
+            for layer in reversed(network):
+                # print(f"grad.shape in train {iter}: ",grad.shape)
+                iter += 1
+                grad = layer.RProp(grad, learning_rate)
         error /= len(x_train)
         if verbose:
             print(f"{e + 1}/{epochs}, error={error}")
