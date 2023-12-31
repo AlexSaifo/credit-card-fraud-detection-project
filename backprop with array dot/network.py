@@ -6,7 +6,7 @@ def predict(network, input):
         output = layer.forward(output)
     return output
 
-def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_rate = 0.01, verbose = True):
+def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_rate = 0.01, w0=1, w1=1, verbose = True):
     for e in range(epochs):
         error = 0
         outputs = []
@@ -16,10 +16,10 @@ def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_r
         output = predict(network, x)
         outputs.append(output)
         # error
-        error += loss(y, output)
+        error += loss(y, output,w0,w1)
 
         # backward
-        grad = loss_prime(y, output)
+        grad = loss_prime(y, output,w0,w1)
         for layer in reversed(network):
             grad = layer.backward(grad, learning_rate)
 
