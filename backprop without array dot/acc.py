@@ -5,7 +5,7 @@ def acc_conf_matrix(y_pred, out):
     print (f"min = {res.min()}")
     print (f"max = {res.max()}")
     for index, value in enumerate(out):
-        if value > 0:
+        if value > 0.5:
             res[index] = 1
         else: res[index] = 0
 
